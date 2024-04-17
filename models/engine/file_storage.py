@@ -34,7 +34,7 @@ def all(self, cls=None):
                 if (key == cls):
                     return (FileStorage.__objects[key])
 
-    def new(self, obj):
+def new(self, obj):
         """Adds new object to storage dictionary"""
         if hasattr(obj, 'id'):
             self.all().update({f"{obj.__class__.__name__}.{obj.id}": obj})
