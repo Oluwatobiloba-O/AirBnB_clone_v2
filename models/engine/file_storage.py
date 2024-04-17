@@ -10,8 +10,12 @@ from models.state import State
 from models.review import Review
 import uuid
 
+class FileStorage:
+    """This class manages storage of hbnb models in JSON format"""
+    __file_path = 'file.json'
+    __objects = {}
 
- def all(self, cls=None):
+def all(self, cls=None):
         """
         Returns a dictionary of models currently in storage,
         that returns the list of objects of one type of class
@@ -37,8 +41,7 @@ import uuid
         else:
             obj.id = str(uuid.uuid4())
             self.all().update({f"{obj.__class__.__name__}.{obj.id}": obj})
-
-    def save(self):
+def save(self):
         """Saves storage dictionary to file"""
         with open(FileStorage.__file_path, 'w') as f:
             temp = {}
@@ -47,7 +50,7 @@ import uuid
                 temp[key] = val.to_dict()
             json.dump(temp, f)
 
-    def reload(self):
+def reload(self):
         """Loads storage dictionary from file"""
 
         classes = {
@@ -64,7 +67,7 @@ import uuid
         except FileNotFoundError:
             pass
 
-    def delete(self, obj=None):
+def delete(self, obj=None):
         """
         Deletes obj from __objects if it’s inside
 
@@ -76,6 +79,6 @@ import uuid
             if key in self.__objects:
                 del self.__objects[key]
 
-    def close(self):
+def close(self):
         """ call the reload() for deserializing the JSON file to objects"""
         reload()
